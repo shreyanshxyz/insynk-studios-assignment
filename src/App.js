@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.scss";
+import Navbar from "./components/Navbar";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import Main from "./components/Main";
 
 function App() {
+  const [moviesList, setMoviesList] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Navbar
+        setMoviesList={setMoviesList}
+        setLoading={setLoading}
+        setError={setError}
+      />
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Main
+                moviesList={moviesList}
+                setMoviesList={setMoviesList}
+                loading={loading}
+                error={error}
+                setLoading={setLoading}
+                setError={setError}
+              />
+            }
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }
